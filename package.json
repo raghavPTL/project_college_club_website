@@ -8,6 +8,9 @@
   },
   "author": "Raghav Patel",
   "license": "ISC",
+  "engines": {
+    "node": "16.16.0"
+  },
   "dependencies": {
     "@mailchimp/mailchimp_marketing": "^3.0.78",
     "body-parser": "^1.20.0",
