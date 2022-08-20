@@ -1,0 +1,22 @@
+ <%- include('partials/headerforlogrig') %>
+
+ <div class="container" style="padding-top: 40px ;">
+  
+      <form action="/login" method="POST" class="sign-up-form">
+            <h2 class="title">Welcom Back </h2>
+            
+            <div class="input-field">
+              <i class="fas fa-envelope"></i>
+              <input type="email" placeholder="Email" name="username" />
+            </div>
+            <div class="input-field">
+              <i class="fas fa-lock"></i>
+              <input type="password" placeholder="Password" name="password" />
+            </div>
+           <!--<input type= "submit" class="btn" value="login" />--> 
+            <button type="submit" class="btn">Login</button>
+      
+          </form>
+      </div>
+
+<%- include('partials/footerforlogrig') %> 

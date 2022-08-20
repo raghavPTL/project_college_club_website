@@ -1,0 +1,16 @@
+<%- include("partials/header"); -%>
+
+
+ <div class="heading">
+      <h1>It Adda Blog Page</h3>
+    </div>
+
+    <section>
+      <% addpost.forEach(function(post){ %>
+      <div class="container-fluid new_blog content">
+      <h2><%=post.title%></h2>
+       <a href="/posts/<%=post._id%>">Read More</a>
+      </div>
+   <% }) %>
+  </section>
+<%- include("partials/footer"); -%>

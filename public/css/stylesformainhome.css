@@ -1,0 +1,71 @@
+
+body {
+  background-color: #E8ECEF;
+}
+hr {
+  border-style: none;
+  border-top-style: dotted;
+  width: 70%;
+  border-color: black;
+  border-width: 8px;
+}
+.centered {
+    padding-top: 200px;
+    text-align: center;
+}
+
+.secret-text {
+  text-align: center;
+  font-size: 2rem;
+  color: #fff;
+  background-color: #000;
+  border-radius: 8px;
+}
+
+.title{
+font-family: 'DynaPuff', cursive;
+}
+
+.container2 {
+  width: 360px;
+  
+  background-color: rgb(185, 194, 194);
+  border-radius: 10px;
+  
+  padding-top: 10px;
+  margin: auto;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  font-family: 'Capriola', sans-serif;
+}
+.container3 {
+  
+  background-color: rgb(185, 194, 194);
+  border-radius: 10px;
+
+  padding-top: 10px;
+  margin: auto;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  font-family: 'Capriola', sans-serif;
+
+    padding-bottom: 15px;
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-top: 15px;
+}
+
+.title2 {
+  font-size: 2.5rem;
+  font-family: 'Courier New', Courier, monospace;
+  color: #444;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+}
+.secret_title{
+  font-family: 'Ubuntu', sans-serif;
+}
+.foot{
+  text-align: center;
+font-family: 'Kalam', cursive;
+  padding-top: 20px;
+}

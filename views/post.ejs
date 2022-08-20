@@ -1,0 +1,32 @@
+<%- include("partials/header"); -%>
+
+
+ <div class="heading">
+      <h1><%=obj.title%></h1>
+</div>
+
+ <div class="container-fluid new_blog content" style=" font-family: 'Fira Sans', sans-serif;
+        font-size: larger;   font-weight: 500;">
+       <p><%=obj.postbody%></p>
+  </div>
+
+<div class="heading">
+      <h1>Resourses</h1>
+</div>
+
+      <%for(var i=0;i< obj.linkdis.length;i++){ %>
+        <div class="container-fluid new_blog content">
+    <h3><%=obj.linkdis[i]%></h3>
+    <a href="<%=obj.livelink[i]%>">click here<a>
+        </div>
+<% } %>
+
+
+
+ 
+
+
+</body>
+</html>
+
+

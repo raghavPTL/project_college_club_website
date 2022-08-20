@@ -1,0 +1,31 @@
+<%- include("partials/header"); -%>
+
+<div class="heading">
+      <h1>About Us </h3>
+</div>
+<div class="container-fluid new_blog content" style=" font-family: 'Fira Sans', sans-serif;
+        font-size: larger;   font-weight: 500;">
+<p><%= st %></p>
+</div>
+
+
+<div class="heading">
+      <h1>Our Backbone</h3>
+</div>
+<section class="secofAboutus">
+      
+     <% for( var i=0;i< obj.length ; i++){ %>
+
+      
+     <div class="divofAboutus">
+     
+        <p style="padding-top: 10px;"> <%=obj[i].name %></p>
+        <p><%=obj[i].designation%></p>
+        <p><%=obj[i].mail%></p>
+        
+    </div>
+   <% } %>
+    
+    </section>
+</body>
+</html>
