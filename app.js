@@ -144,9 +144,11 @@ app.get("/compose",function(req,res){
    if(req.isAuthenticated()){
             console.log(req.user);
          Owner.findOne({name:req.user.username}, function(err, postt){
-      
+           console.log(postt);
+           console.log("Owner");
+           console.log(Owner);
         if(postt==null){
-           res.redirect("/home");
+          res.render("submit", { status:"You are not authorised person to post Blog..."});
         }
         else{
           
