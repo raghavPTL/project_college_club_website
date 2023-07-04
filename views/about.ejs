@@ -1,31 +1,38 @@
 <%- include("partials/header"); -%>
 
-<div class="heading">
-      <h1>About Us </h3>
-</div>
-<div class="container-fluid new_blog content" style=" font-family: 'Fira Sans', sans-serif;
+      <div class="heading">
+            <h1>About Us </h3>
+      </div>
+      <div class="container-fluid new_blog content" style=" font-family: 'Fira Sans', sans-serif;
         font-size: larger;   font-weight: 500;">
-<p> WE ARE FOR..... To provide the resources to the coding community....To boost the environment of CP among the freshers by providing them with a guided path with resources...To learn and connect with the alumni who are placed in great companies.</p>
-</div>
+            <p> WE ARE FOR..... To provide the resources to the coding community....To boost the environment of CP among
+                  the freshers by providing them with a guided path with resources...To learn and connect with the
+                  alumni who are placed in great companies.</p>
+      </div>
 
 
-<div class="heading">
-      <h1>Our Backbone</h3>
-</div>
-<section class="secofAboutus">
-      
-     <% for( var i=0;i< obj.length ; i++){ %>
+      <div class="heading">
+            <h1>Our Backbone</h3>
+      </div>
+      <section class="secofAboutus">
 
-      
-     <div class="divofAboutus">
-     
-        <p style="padding-top: 10px;"> <%=obj[i].name %></p>
-        <p><%=obj[i].designation%></p>
-       
-        
-    </div>
-   <% } %>
-    
-    </section>
-</body>
-</html>
+            <% for( var i=0;i< obj.length ; i++){ %>
+
+
+                  <div class="divofAboutus">
+
+                        <p style="padding-top: 10px;">
+                              <%=obj[i].name %>
+                        </p>
+                        <p>
+                              <%=obj[i].designation%>
+                        </p>
+
+
+                  </div>
+                  <% } %>
+
+      </section>
+      </body>
+
+      </html>
