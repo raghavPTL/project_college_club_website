@@ -1,10 +1,11 @@
 //jshint esversion:6
-
+require('dotenv').config()
 const express = require("express");
 const bodyParser = require("body-parser");
 const https = require("https");
 const ejs = require("ejs");
 const mongoose=require("mongoose");
+
 var _ = require('lodash');
 
 var session = require('express-session')
@@ -19,7 +20,8 @@ app.use(express.static("public"));
 
 
 app.use(session({
-  secret: 'i am raghav patel',
+  //secret: 'i am raghav patel',
+  secret : process.env.sessionSec,
   resave: false,
   saveUninitialized: false,
   //cookie: { secure: true }
@@ -27,7 +29,8 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-const db="mongodb+srv://raghavnp:bhai2003bhai@cluster0.kahfwrm.mongodb.net/blogDB?retryWrites=true&w=majority";
+const db= process.env.mongoUrl;
+//const db="mongodb+srv://raghavnp:bhai2003bhai@cluster0.kahfwrm.mongodb.net/blogDB?retryWrites=true&w=majority";
 mongoose.connect(db).then(()=>{
 console.log("connection sucess fully");
 }).catch((err)=>console.log(err));
@@ -108,7 +111,9 @@ Post.find({}, function(err, posts){
  })
 }
 else{
-   res.redirect("/login");
+  res.status(401).render("login", { errorMessage: "*Logging in to access home page" });
+  
+   //res.redirect("/login");
 }
 });
 
@@ -125,7 +130,8 @@ app.get("/about",function(req,res){
  })
   }
   else{
-    res.redirect("/login");
+    res.status(401).render("login", { errorMessage: " *Logging in to access about page" });
+    //res.redirect("/login");
   }
 });
 
@@ -135,7 +141,8 @@ app.get("/contact",function(req,res){
     res.render("contact", {st: contactContent  });
   }
   else{
-    res.redirect("/login");
+    res.status(401).render("login", { errorMessage: "*Logging in to access contact page" });
+    //res.redirect("/login");
   }
 });
 
@@ -148,7 +155,7 @@ app.get("/compose",function(req,res){
            console.log("Owner");
            console.log(Owner);
         if(postt==null){
-          res.render("submit", { status:"You are not authorised person to post Blog..."});
+          res.render("submit", { status:"*You are not authorised person to post Blog..."});
         }
         else{
           
@@ -162,7 +169,8 @@ app.get("/compose",function(req,res){
    
    }
    else{
-      res.redirect("/login");
+      res.status(401).render("login", { errorMessage: "*Logging in to access compose page" });
+      //res.redirect("/login");
    }
     
 });
@@ -181,7 +189,8 @@ app.get("/posts/:postid",function(req,res){
        });
        }
    else{
-      res.redirect("/login");
+      res.status(401).render("login", { errorMessage: "*Please authenticate first" });
+      //res.redirect("/login");
    }
        
 
@@ -194,18 +203,20 @@ app.get("/",function(req,res){
 
 app.get("/register",function(req,res){
     
-     res.render("register");
+     res.status(401).render("register", { errorMessage: "" });
+  
 })
  
 app.get("/login",function(req,res){
-     res.render("login");
+     res.status(401).render("login", { errorMessage: "" });
 })
 app.get("/subscribe",function(req,res){
    if(req.isAuthenticated()){
      res.render("subscribe");
      }
    else{
-      res.redirect("/login");
+      res.status(401).render("login", { errorMessage: "*Logging in to access  subscribe page" });
+      //res.redirect("/login");
    }
 })
 
@@ -217,10 +228,13 @@ app.get("/logout", (req, res) => {
   });
 });
 
+/*
+console.log(process.env.mongoUrl);
+console.log(process.env.sessionSec);
+console.log(process.env.mailchimpUrl );
+console.log(process.env.mailchimpAuth);
 
-
-
-
+*/
 
 
 
@@ -256,14 +270,15 @@ app.post("/register", function(req,res){
     if(err){
 
      // console.log("Error in registering.",err);
-
-      res.redirect("/register");
+      res.status(401).render("register", { errorMessage: "*Please try again..." });
+  
+     // res.redirect("/register");
 
     }else{
 
       passport.authenticate("local")(req,res, function(){
 
-      //console.log(user,101);
+       //console.log(user,101);
        // console.log("new user....");
         res.redirect("/home");
 
@@ -282,19 +297,53 @@ app.post("/login",function(req,res){
     password: req.body.password
   });
 
-  req.login(user, function(err){
+   req.login(user, function(err) {
+  if (err) {
+    // Handle login error
+    res.status(401).render("login", { errorMessage: "*Invalid username or password" });
+  } else {
+    passport.authenticate("local", function(err, user, info) {
+      if (err) {
+        // Handle authentication error
+        res.status(500).render("login", { errorMessage: "*Internal server error" });
+      } else if (!user) {
+        // Handle non-registered user
+        res.status(401).render("register", { errorMessage: "*User not registered" });
+      } else {
+        // Successful authentication
+        req.logIn(user, function(err) {
+          if (err) {
+            // Handle login error
+            res.status(500).render("login", { errorMessage: "*Internal server error" });
+          } else {
+            // Redirect to home page
+            res.redirect("/home");
+          }
+        });
+      }
+    })(req, res);
+  }
+});
+
+
+  /*
+    req.login(user, function(err){
     if (err) {
      // console.log(err);
-     res.redirect("/register");
+     res.status(401).render("register", { errorMessage: "Please authenticate first" });
+  
+     //res.redirect("/register");
     } else {
       passport.authenticate("local")(req, res, function(){
         //console.log("old user....");
-          
+
 
         res.redirect("/home");
       });
     }
-  });
+  }); */
+
+
 })
 
 
@@ -323,13 +372,13 @@ app.post("/subscribe", function (req, res) {
  
 //You need to input your server number and list ID where I wrote YOURSERVERNUMBER and YOURLISTID
  
-    const url = "https://us18.api.mailchimp.com/3.0/lists/8f4f51c313";
+    const url = process.env.mailchimpUrl;
     const options = {
         method: "POST",
  
 //You need to input YOURAPIKEY between the quotes, you can also change whatevername1
  
-        auth: "whatevername1:41e7ccf6567014f03320f790ff97bf1f-us18"
+        auth: process.env.mailchimpAuth
     };
  
     const request = https.request(url, options, function (response) {
@@ -381,7 +430,15 @@ app.post("/subscribe", function (req, res) {
 
 
 app.post("/contact",function(req,res){
-     const mantor=new Mentor({
+
+
+   Mentor.findOne({mail:req.user.username}, function(err, postt){
+       
+    if(postt!=null){
+      res.render("submit", { status:"You already submitted.We will reach you as soon as possible via your Mobile Number."});
+    }
+    else{
+            const mantor=new Mentor({
       phone:req.body.phone,
       mail:req.user.username,
       topic:req.body.topic
@@ -392,10 +449,18 @@ app.post("/contact",function(req,res){
           res.render("submit", { status:"pls try again later"});
     }
     else{
-        console.log(result)
+
+
+           console.log(result)
           res.render("submit", { status:"Submit Sucessfullly..."});
     }
 })
+    }
+         
+        
+      
+       });
+     
 })
 
 

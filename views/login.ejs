@@ -4,7 +4,12 @@
   
       <form action="/login" method="POST" class="sign-up-form">
             <h2 class="title">Welcom Back </h2>
-            
+  <% if (errorMessage) { %>
+  <div class="error-message">
+    <%= errorMessage %>
+  </div>
+<% } %>
+
             <div class="input-field">
               <i class="fas fa-envelope"></i>
               <input type="email" placeholder="Email" name="username" />
